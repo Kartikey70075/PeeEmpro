@@ -1,0 +1,206 @@
+﻿
+
+@{
+    ViewBag.Title = "Sale_Order";
+
+}
+
+<link href="~/assets/css/StyleSheet_Row.css" rel="stylesheet" />
+
+
+<div ng-app="MyApp" ng-controller="SaleOrder" ng-init="SaleOrderInit()" style="position:relative">
+
+    <br />
+    <br />
+    <div>
+
+    </div>
+    <div>
+        <div class="card-header" style="background-color: #0097a7; height: 59px; margin-bottom: 4px; margin-top: -24px;">
+            <div class="row">
+                <div class="col-12 text-center" style="margin-left:-90px;">
+                    <p style="font-weight:bold; color: white; margin-top: -11px; margin-left:67px; font-size: 25px !important; ">Sale's & production Order</p>
+                </div>
+            </div>
+        </div>
+        <br />
+        <br />
+        <div id="SamplteDivId">
+            <div class="row">
+                <div class="table-responsive" style="margin-left:3%;">
+                    <p style="font-weight:bold; color: black; font-size: 25px !important; ">List of approved costing</p>
+                    <table ng-table="created_costing" class="table table-bordered table-striped" show-filter="true">
+                        <tr ng-repeat="x in $data" style="text-align:center" class="text-right">
+                            <td title="'DocEntry'" filter="{ DocEntry: 'text'}" class="notfirst" style="text-align:center" sortable="'DocEntry'">{{x.DocEntry}}</td>
+                            <td title="'Costing No'" filter="{ Costing_Num: 'text'}" class="notfirst" style="text-align:center" sortable="'Costing_Num'">{{x.Costing_Num}}</td>
+                            <td title="'Customer Name '" filter="{ CustomerName: 'text'}" class="notfirst" style="text-align:center" sortable="'CustomerName'">{{x.CustomerName}}</td>
+                            <td title="'Code'" filter="{ Code: 'text'}" class="notfirst" style="text-align:center" sortable="'Code'">{{x.Code}}</td>
+                            <td title="'Sales Order No'" filter="{ U_SN: 'text'}" class="notfirst" style="text-align:center" sortable="'U_SN'">{{x.U_SN}}</td>
+                            <td title="'Action'" class="notfirst" style="text-align:center;width:150px;text-align:center">
+                                <button class="btn btn-sm btn-primary" data-dismiss="modal" ng-click="Costing_dtl(x)">Create</button>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <br />
+            </div>
+            <div class="row" style="margin-left:12px">
+                <div class="col-6">
+                    <div class="row">
+                        <div class="col-2">
+                            <label style="margin-right:-56px">Select Customer<strong class="text-danger"></strong></label>
+                        </div>
+                        <div class="col-4">
+                            <input class="form-control" type="text" placeholder="Customer Name..." ng-model="CustomerName" disabled />
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="row">
+                        <div class="col-2">
+                            <label style="margin-right:-56px">Customer Code<strong class="text-danger"></strong></label>
+                        </div>
+                        <div class="col-4">
+                            <input class="form-control" type="text" placeholder="Customer Code..." ng-model="CustomerCode" disabled />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br />
+            <div class="row" style="margin-left:12px">
+                <div class="col-6">
+                    <div class="row">
+                        <div class="col-2">
+                            <label style="margin-right:-56px">Ship To<strong class="text-danger"></strong></label>
+                        </div>
+                        <div class="col-4">
+                            <select style="width: 98%; margin-left:2px" ng-model="Bill_To_v" class="form-control">
+                                <option value="">--Select--</option>
+                                <option ng-repeat="z in B_S_Data" value="{{z.Address}}">{{z.Address}}</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="row">
+                        <div class="col-2">
+                            <label style="margin-right:-56px">Bill To<strong class="text-danger"></strong></label>
+                        </div>
+                        <div class="col-4">
+                            <select style="width: 98%; margin-left:2px" ng-model="Ship_To_v" ng-change="SL_Statefind()" class="form-control">
+                                <option value="">--Select--</option>
+                                <option ng-repeat="z in B_S_Data2" value="{{z.State}}">{{z.Address2}}</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="row" style="margin-left:12px">
+                <div class="col-6">
+                    <div class="row">
+
+                    </div>
+                </div>
+                <div class="col-6" ng-show="Stname!=null">
+                    <div class="row">
+                        <div class="col-2">
+                            <label style="margin-right:-56px">State<strong class="text-danger"></strong></label>
+                        </div>
+                        <div class="col-4">
+                            <input class="form-control" type="text" ng-model="Stname" disabled />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br />
+            <div class="row" style="margin-left:12px">
+                <div class="col-6">
+                    <div class="row">
+                        <div class="col-2">
+                            <label style="margin-right:-56px">Deliviry Date<strong class="text-danger"></strong></label>
+                        </div>
+                        <div class="col-4">
+                            <input type="date" ng-model="Deliviry_Date" class="form-control" />
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="row">
+                        <div class="col-2">
+                            <label style="margin-right:-56px">Post Date<strong class="text-danger"></strong></label>
+                        </div>
+                        <div class="col-4">
+                            <input type="date" ng-model="Post_Date" class="form-control" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br />
+            <br />
+            <br />
+            <div >
+                <table class="table table-striped" style="overflow:scroll;">
+                    <thead>
+                        <tr style="text-align:center">
+                            <th>Serial No</th>
+                            <th>Item Code</th>
+                            <th>Item Name</th>
+                            <th>Costing Number</th>
+                            <th>Total Order Qty(Pcs)</th>
+                            <th>Total Kg</th>
+                            <th>PricePerPc</th>
+                            <th>Grand Total(Pcs)</th>
+                            <th>WareHouse Name</th>
+                            <th>Uom</th>
+                            <th>Tax Name</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="x in Costing_Item" style="text-align:center">
+                            <td>{{$index+1}}</td>
+                            <td>{{x.ItemCode}}</td>
+                            <td>{{x.ItemName}}</td>
+                            <td>{{x.CostingNum}}</td>
+                            <td>{{x.TotalOrderQty}}</td>
+                            <td>{{x.Totalkg}}</td>
+                            <td>{{x.Priceperpc}}</td>
+                            <td>{{x.Grand_Total}}</td>
+                            <td>
+                                <select ng-model="x.WhsCode" class="form-control">
+                                    <option value="">--Select--</option>
+                                    <option ng-repeat="z in WareHouse" value="{{z.WhsCode}}">{{z.WhsName}}</option>
+                                </select>
+                            </td>
+                            <td>
+                                <input type="text" class="form-control" ng-model="x.UOM" />
+
+                            </td>
+                            <td>
+                                <select ng-model="x.TaxCode" class="form-control">
+                                    <option value="">--Select--</option>
+                                    <option ng-repeat="z in TaxName" value="{{z.TaxCode}}">{{z.TaxName}}</option>
+                                </select>
+                            </td>
+                            @*<td>
+                                <button type="button" ng-click="dtlitem($index)" style="background-color: black; margin-left: -30%">Delete</button>
+                            </td>*@
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="row">
+                    <div class="col-12 text-center">
+                        <button class="btn btn-sm btn-primary" ng-click="SaleOrderPunch()">Sale's & Production Order Punch</button>
+                    </div>
+
+                </div>
+                <br />
+                <br />
+
+            </div>
+
+        </div>
+    </div>
+</div>

@@ -1,0 +1,182 @@
+﻿
+@{
+    ViewBag.Title = "POS";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div ng-app="MyApp" ng-controller="MainPage" ng-init="TowelInit()" @*style="position:relative"*@>
+    <div>
+        <div class="card-header" style="background-color: #0097a7; height: 30px; margin-bottom: 4px; margin-top: 10px;">
+            <div class="row">
+                <div class="col-12 text-center" style="margin-left:-90px;">
+                    <p style="font-weight: bold; color: white; margin-top: -17px;font-size: 25px !important; ">POINT OF SALE (POS)</p>
+                </div>
+            </div>
+        </div>
+        <br />
+        <br />
+        <div id="SamplteDivId">
+            <div class="row" style="margin-left:12px">
+                <div class="col-6">
+                    <div class="row">
+                        <div class="col-2">
+                            <label style="margin-right:-56px">Type  Of  Customer<strong class="text-danger"></strong></label>
+                        </div>
+                        <div class="col-4">
+                            <div ng-show="angodiv" angucomplete-alt id="CustomerName2" placeholder="Type Of CustomerName.." pause="100" ng-model="P.CustomerName"
+                                 selected-object="AfterSelectedSOBP2" local-data="OCRD" search-fields="CustomerName,CustomerCode" input-class="form-control"
+                                 title-field="CustomerName" description-field="CustomerName,CustomerCode" minlength="1" match-class="highlight"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="row">
+                        <div class="col-2">
+                            <label style="margin-right:-56px">Customer Name<strong class="text-danger"></strong></label>
+                        </div>
+                        <div class="col-4">
+                            <input class="form-control" type="text" placeholder="Customer Name..." ng-model="P.CustomerName" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br />
+            <div class="row" style="margin-left:12px">
+                <div class="col-6">
+                    <div class="row">
+                        <div class="col-2">
+                            <label style="margin-right:-56px">Mobile Number<strong class="text-danger"></strong></label>
+                        </div>
+                        <div class="col-4">
+                            <input class="form-control" type="text" placeholder="Mobile Number..." ng-model="P.CustomerMobile" />
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="row">
+                        <div class="col-2">
+                            <label style="margin-right:-56px">Email Id<strong class="text-danger"></strong></label>
+                        </div>
+                        <div class="col-4">
+                            <input class="form-control" type="text" placeholder="Email Id..." ng-model="P.CustomerEmail" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br />
+            <div class="row" style="margin-left:12px">
+                <div class="col-6">
+                    <div class="row">
+                        <div class="col-2">
+                            <label style="margin-right:-56px">Payment Method<strong class="text-danger"></strong></label>
+                        </div>
+                        <div class="col-4">
+                            <select style="width: 98%; margin-left:2px" ng-model="P.Paymentmethod" class="form-control">
+                                <option value="">--Select--</option>
+                                <option value="CASH">CASH</option>
+                                <option value="CARD">CARD</option>
+                                <option value="Net Banking">Net Banking</option>
+                                <option value="UPI">UPI</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="row">
+                        <div class="col-2">
+
+                        </div>
+                        <div class="col-4">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br />
+            <br />
+            <br />
+            <br />
+            <div style="overflow: scroll ; margin-left:-2%" class="tab-content">
+                <div class="tab-pane fade show active" id="t1" role="tabpanel" aria-labelledby="t1-tab">
+                    <div class="row">
+                        <div class="table-responsive" style="overflow-x:inherit">
+                            <table class="table table-bordered table-striped" style="margin-left:5%">
+                                <thead>
+                                    <tr>
+
+                                        <th class="text-center">Search Item Code/Name</th>
+                                        <th class="text-center">Item Code</th>
+                                        <th class="text-center">Item Name</th>
+                                        <th class="text-center">Quantity</th>
+                                        <th class="text-center">Tax Code</th>
+                                        <th class="text-center">Unit Price</th>
+                                        <th class="text-center">Discount</th>
+                                        <th class="text-center">Total</th>
+                                    </tr>
+
+                                </thead>
+
+                                <tbody>
+                                    <tr class="text-center">
+
+                                        <th>
+                                            <div angucomplete-alt id="CustomerName2" placeholder="Supliers Name." pause="100" ng-model="y.CardName" selected-object="AfterSelecteditem_wp" local-data="ItemDtl" search-fields="itemcode,dscription" input-class="form-control text-center" title-field="itemcode" description-field="dscription" minlength="1" clear-selected="true" match-class="highlight" autofocus style=" border: 1px solid red !important;">
+                                            </div>
+                                        </th>
+                                        <th>
+                                            <input class="form-control text-center" placeholder="Item Code.." ng-model="y.ItemName" disabled />
+                                        </th>
+                                        <th>
+                                            <input class="form-control text-center" placeholder="Item Name.." ng-model="y.ItemCode" disabled />
+                                        </th>
+                                        <th>
+                                            <input class="form-control text-center" placeholder="Item Name.." ng-model="y.Quantity" />
+                                        </th>
+                                        <th> <input type="text" ng-model="y.Tax_Code" value="10%" amount-Only class="form-control text-center"></th>
+                                        <th> <input type="text" ng-model="y.UnitPrice" amount-Only class="form-control text-center" ng-blur="RowTotalCaluc()"></th>
+                                        <th> <input type="text" ng-model="y.Discount" amount-Only class="form-control text-center" ng-blur="RowTotalCaluc()"></th>
+                                        <th> <input type="text" ng-model="y.Total" amount-Only class="form-control text-center" ng-blur="RowTotalCaluc()"></th>
+                                        <th>
+                                            <button ng-click="withoutpodtl(y)" style="margin-left:-20%;" class="btn btn-primary">+</button>
+                                        </th>
+                                        <th>
+                                            <button ng-click="UP_withoutpodtl(y)"
+                                                    ng-hide="withoutpodata.length === 0 || UPbtnwhtpo"
+                                                    style="margin-left: -20%;"
+                                                    class="btn btn-primary">
+                                                Update
+                                            </button>
+                                        </th>
+
+
+                                    </tr>
+                                    <tr ng-repeat="x in withoutpodata" class="text-center">
+                                        <th>{{$index+1}}</th>
+                                        <th>{{x.ItemName}}</th>
+                                        <th>{{x.ItemCode}}</th>
+                                        <th>{{x.WareHousedtl}}</th>
+                                        <th>{{x.recv_Qty}}</th>
+                                        <th>{{x.GRPO_REM}}</th>
+                                        <th><button ng-click="EditItemRow($index)" type="button" class="btn btn-primary">Edit</button></th>
+                                        <th><button ng-click="DeleteItemRow($index)" class="btn btn-danger" type="button">Delete</button></th>
+                                    </tr>
+                                </tbody>
+
+                            </table>
+                            <div class="row">
+                                <div class="col-12 text-center">
+                                    <button class="btn btn-sm btn-primary" ng-click="POS(P)">SAVE</button>
+                                </div>
+
+                            </div>
+                            <br />
+                            <br />
+                        </div>
+                    </div>
+
+                </div>
+                <br />
+            </div>
+        </div>
+    </div>
+</div>
+

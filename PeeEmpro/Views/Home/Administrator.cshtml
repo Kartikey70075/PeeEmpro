@@ -1,0 +1,326 @@
+﻿
+@{
+    ViewBag.Title = "Administrator";
+}
+<link href="~/assets/css/StyleSheet_Row.css" rel="stylesheet" />
+<div ng-app="MyApp" ng-controller="MyCtrl" ng-init="INIT()">
+    <div>
+        <div class="table-responsive">
+            <table style="width:1150px;margin-left:30px" ng-table="usersTable_Sm" class="table table-bordered table-striped" show-filter="true">
+                <tr ng-repeat="x in $data" style="text-align:center" class="text-right">
+                    <td title="'DocEntry'" filter="{ DocEntry: 'text'}" class="notfirst" style="text-align:center" sortable="'DocEntry'">{{x.DocEntry}}</td>
+                    <td title="'Date Of Sampling'" filter="{ DATE: 'date'}" class="notfirst" style="text-align:center" sortable="'DATE'">{{x.DATE}}</td>
+                    <td title="'Sales Employeer'" filter="{ UserNameFrom: 'date'}" class="notfirst" style="text-align:center" sortable="'UserNameFrom'">{{x.UserNameFrom}}</td>
+
+                    <td title="'SAM_FOR_BUYER '" filter="{ SAM_FOR_BUYER: 'text'}" class="notfirst" style="text-align:center" sortable="'SAM_FOR_BUYER'">{{x.SAM_FOR_BUYER}}</td>
+                    <td title="'Sempling Merchandiser'" filter="{ SAM_MERC: 'text'}" class="notfirst" style="text-align:center" sortable="'SAM_MERC'">{{x.SAM_MERC}}</td>
+                    <td title="'Action'" class="notfirst" style="text-align:center;width:150px;text-align:center">
+                        <button class="btn btn-sm btn-black" data-dismiss="modal" ng-click="Sample_View(x.DocEntry)"> View</button>
+                    </td>
+                    <td title="'Action'" class="notfirst" style="text-align:center;width:150px;text-align:center">
+                        <button class="btn btn-sm btn-primary" data-dismiss="modal" ng-click="Approved(x.DocEntry)"> Approve</button>
+                        <button class="btn btn-sm btn-danger" data-dismiss="modal" data-toggle="modal" data-target=".bd-example-modal-lg" ng-click="Reject_Semple(x.DocEntry)"> Reject</button>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+    </div>
+    <br />
+    <br />
+    <div ng-hide="Sm_View">
+
+        <div class="card-header" style="background-color: #0097a7; height: 59px; margin-bottom: 4px; margin-top: -24px;">
+            <div class="row">
+                <div class="col-12 text-center" style="margin-left:-90px;">
+                    <p style="font-weight:bold; color: white; margin-top: -11px; margin-left:67px; font-size: 25px !important; ">Sample View</p>
+                </div>
+            </div>
+
+        </div>
+        <br />
+        <br />
+        <div id="SamplteDivId">
+            <div class="row" style="margin-left:12px">
+                <div class="col-6">
+                    <div class="row">
+                        <div class="col-2">
+                            <label style="margin-right:-56px">DocEntry<strong class="text-danger"></strong></label>
+                        </div>
+                        <div class="col-4">
+                            <input style="margin-left:50px" class="form-control" type="text" ng-model="Sample.Sm_Doc" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-2">
+                            <label style="margin-right:-56px">Remarks<strong class="text-danger"></strong></label>
+                        </div>
+                        <div class="col-4">
+                            <input style="margin-left:50px" class="form-control" type="text" ng-model="Sample.Sm_Remarks" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-2">
+                            <label style="margin-right:-56px">Art Work P/D<strong class="text-danger"></strong></label>
+                        </div>
+                        <div class="col-4">
+                            <input style="margin-left:50px" class="form-control" type="text" ng-model="Sample.Sm_Art" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-2">
+                            <label style="margin-right:-56px">CAD DEV. By<strong class="text-danger"></strong></label>
+                        </div>
+                        <div class="col-4">
+                            <input style="margin-left:50px" class="form-control" type="text" ng-model="Sample.Sm_CAD_DEV_By" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-2">
+                            <label style="margin-right:-56px">Marchent Name <strong class="text-danger"></strong></label>
+                        </div>
+                        <div class="col-4">
+                            <input style="margin-left:50px" class="form-control" type="text" ng-model="Sample.Sm_Marchent_Name" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-2">
+                            <label style="margin-right:-56px">Sample Techniq Given By <strong class="text-danger"></strong></label>
+                        </div>
+                        <div class="col-4">
+                            <input style="margin-left:50px" class="form-control" type="text" ng-model="Sample.Sm_Sample_tech" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-2">
+                            <label style="margin-right:-56px"> Product Profile  <strong class="text-danger"></strong></label>
+                        </div>
+                        <div class="col-4">
+                            <input style="margin-left:50px" class="form-control" type="text" ng-model="Sample.Sm_Product_pr" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-2">
+                            <label style="margin-right:-56px">User Name <strong class="text-danger">*</strong></label>
+                        </div>
+                        <div class="col-4">
+                            <input style="margin-left:50px" class="form-control" type="text" ng-model="Sample.Sm_User_Name" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-2">
+                            <label style="margin-right:-56px">Date <strong class="text-danger"></strong></label>
+                        </div>
+                        <div class="col-4">
+                            <input style="margin-left:50px" class="form-control" type="text" ng-model="Sample.Sm_Date" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-2">
+                            <label style="margin-right:-56px">Quality Refrance <strong class="text-danger"></strong></label>
+                        </div>
+                        <div class="col-4">
+                            <input style="margin-left:50px" class="form-control" type="text" ng-model="Sample.Sm_Quality_Refrance" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-2">
+                            <label style="margin-right:-56px">Protocol <strong class="text-danger">*</strong></label>
+                        </div>
+                        <div class="col-4">
+                            <input style="margin-left:50px" class="form-control" type="text" ng-model="Sample.Sm_Protocol" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-2">
+                            <label style="margin-right:-56px">Samplte For<strong class="text-danger"></strong></label>
+                        </div>
+                        <div class="col-4">
+                            <input style="margin-left:50px" class="form-control" type="text" ng-model="Sample.Sm_Samplte_For" />
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="col-6">
+                    <div class="row">
+                        <div class="col-2">
+                            <label style="margin-right:-56px">Create Date <strong class="text-danger"></strong></label>
+                        </div>
+                        <div class="col-4">
+                            <input style="margin-left:50px" class="form-control" type="text" ng-model="Sample.Sm_Create_Date " />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-2">
+                            <label style="margin-right:-56px">UpdateDate<strong class="text-danger"></strong></label>
+                        </div>
+                        <div class="col-4">
+                            <input style="margin-left:50px" class="form-control" type="text" ng-model="Sample.Sm_UpdateDate" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-2">
+                            <label style="margin-right:-56px">Creator<strong class="text-danger"></strong></label>
+                        </div>
+                        <div class="col-4">
+                            <input style="margin-left:50px" class="form-control" type="text" ng-model="Sample.Sm_Creator" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-2">
+                            <label style="margin-right:-56px">SAMPLE BASED ON<strong class="text-danger"></strong></label>
+                        </div>
+                        <div class="col-4">
+                            <input style="margin-left:50px" class="form-control" type="text" ng-model="Sample.Sm_SAMPLE_BASED_ON" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-2">
+                            <label style="margin-right:-56px">CARD NO <strong class="text-danger"></strong></label>
+                        </div>
+                        <div class="col-4">
+                            <input style="margin-left:50px" class="form-control" type="text" ng-model="Sample.Sm_CARD_NO" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-2">
+                            <label style="margin-right:-56px">CARD APPROVED BY<strong class="text-danger"></strong></label>
+                        </div>
+                        <div class="col-4">
+                            <input style="margin-left:50px" class="form-control" type="text" ng-model="Sample.Sm_CARD_APPROVED_BY" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-2">
+                            <label style="margin-right:-56px">SEASON<strong class="text-danger"></strong></label>
+                        </div>
+                        <div class="col-4">
+                            <input style="margin-left:50px" class="form-control" type="text" ng-model="Sample.Sm_SEASON" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-2">
+                            <label style="margin-right:-56px">OPPURTUNITY<strong class="text-danger">*</strong></label>
+                        </div>
+                        <div class="col-4">
+                            <input style="margin-left:50px" class="form-control" type="text" ng-model="Sample.Sm_OPPURTUNITY" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-2">
+                            <label style="margin-right:-56px">USERNAME(TO) <strong class="text-danger"></strong></label>
+                        </div>
+                        <div class="col-4">
+                            <input style="margin-left:50px" class="form-control" type="text" ng-model="Sample.Sm_USERNAME_TO" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-2">
+                            <label style="margin-right:-56px">Quality Type <strong class="text-danger"></strong></label>
+                        </div>
+                        <div class="col-4">
+                            <input style="margin-left:50px" class="form-control" type="text" ng-model="Sample.Sm_Quality_Type" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-2">
+                            <label style="margin-right:-56px">Market Type <strong class="text-danger">*</strong></label>
+                        </div>
+                        <div class="col-4">
+                            <input style="margin-left:50px" class="form-control" type="text" ng-model="Sample.Sm_Market_Type " />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-2">
+                            <label style="margin-right:-56px">Aproved<strong class="text-danger"></strong></label>
+                        </div>
+                        <div class="col-4">
+                            <input style="margin-left:50px" class="form-control" type="text" ng-model="Sample.Sm_Aproved" />
+                        </div>
+                    </div>
+                    <br />
+                    <br />
+                </div>
+            </div>
+            <br />
+
+            <div style="overflow:scroll">
+                <table class="table table-striped" style="margin-left:50px">
+                    <thead>
+                        <tr>
+
+                            <th>LineId</th>
+                            <th>ITEMCODE</th>
+                            <th>ITEM Name</th>
+                            <th>Design Name</th>
+                            <th>Length</th>
+                            <th>Width</th>
+                            <th>Punch Gsm</th>
+                            <th>COLOR_CODE</th>
+                            <th>MATERIAL</th>
+                            <th>SPUN</th>
+                            <th>TYPE</th>
+                            <th>CAD ATTACHMENT</th>
+                            <th>Total Pcs</th>
+                            <th>APPROVED B(INTERNAL)Y</th>
+                            <th>APPROVED BY BUYER</th>
+                            <th>APPROVED DATE(BUYER)</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="x in Sample_R">
+
+                            <td>{{x.LineId}}</td>
+                            <td>{{x.U_ITEM_C}}</td>
+                            <td>{{x.U_ITEM_N}}</td>
+                            <td>{{x.U_DesignName}}</td>
+                            <td>{{x.U_Length}}</td>
+                            <td>{{x.U_Width}}</td>
+                            <td>{{x.U_PunchGsm}}</td>
+                            <td>{{x.U_COLOR_CODE}}</td>
+                            <td>{{x.U_MATERIAL}}</td>
+                            <td>{{x.U_SPUN}}</td>
+                            <td>{{x.U_TYPE}}</td>
+
+                            @*<td>
+                                    <a href="@Url.Action("DownloadFile", "Home", x.U_CAD_A)" target="_blank">Open File</a>
+                                </td>*@
+                            <td>
+                                @*<button type="button" style=" width: 110px; background-color: dodgerblue;" ng-click="downloadFile(x.U_CAD_A)">{{x.U_CAD_A}}</button>*@
+                                <a style="color: dodgerblue" ng-click="downloadFile(x.U_CAD_A)">{{x.U_CAD_A}}</a>
+                                @*<button type="button" style=" width: 110px; background-color: dodgerblue;" ng-click="downloadFile(x.U_CAD_A)">{{x.U_CAD_A}}</button>*@
+
+                            </td>
+
+                            <td>{{x.U_Total}}</td>
+                            <td>{{x.U_APPROVED_BY}}</td>
+                            <td>{{x.U_APPROVED_BY_BUYER}}</td>
+                            <td>{{x.U_APP_DATE}}</td>
+
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <br />
+            <br />
+
+
+        </div>
+        <div class="row">
+            <div class="col-6 text-center">
+                <button class="btn btn-sm btn-primary" style="margin-bottom: 50px; height: 33px; width: 94px; margin-right: 85px " ng-click="Approved(DocEntry_View)">Approve</button>
+            </div>
+            <div class="col-6 text-center">
+                <button class="btn btn-sm btn-danger" style="margin-bottom: 50px; height: 33px; width: 94px; margin-right: 85px " ng-click="Reject_Semple(DocEntry_View)">Reject</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+
+

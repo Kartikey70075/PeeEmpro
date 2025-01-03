@@ -1,0 +1,64 @@
+﻿
+@{
+    ViewBag.Title = "RepDownLoad";
+    //Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .app-main .app-main__inner {
+        background-color: aliceblue;
+    }
+
+    fieldset {
+        margin-top: 20px;
+        border: 1px solid #3d5a80 !important;
+        padding: 1rem !important;
+    }
+
+    legend {
+        width: auto !important;
+        text-align: center;
+        font-size: 23px;
+    }
+</style>
+<div  ng-controller="ReportCtrl" ng-init="ViewCostingData()";>
+    <div class="row">
+        <div class="col-12">
+            <div class="content-body">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-content">
+                                <div class="card-body">
+                                    <hr />
+                                    <div class="wtmrk_dashboard_dashboard"></div>
+                                    <div class="row my-1">
+                                        <div class="col-12">
+                                            <div class="table-responsive">
+                                                <table ng-table="AllCostingData" class="table table-bordered table-striped" show-filter="true">
+                                                    <tr ng-repeat="d in $data" class="text-right">
+                                                        <td title="'Serial No'" filter="{ docentry: 'text'}" style="text-align:center" sortable="'docentry'">{{d.docentry}}</td>
+                                                        <td title="'DocEntry'" filter="{ docentry: 'text'}" style="text-align:center" sortable="'docentry'">{{d.docentry}}</td>
+                                                        <td title="'Customer Name'" filter="{ Customername: 'text'}" style="text-align:center" sortable="'Customername'">{{d.Customername}}</td>
+                                                        <td title="'Date Of Costing'" filter="{ CostingDate: 'text'}" style="text-align:center" sortable="'CostingDate'">{{d.CostingDate}}</td>
+                                                        <td title="'merchandiser'" filter="{ merchandiser: 'text'}" style="text-align:center " sortable="'merchandiser'">{{d.merchandiser}}</td>
+                                                        <td title="'Costing Num'" filter="{ CostingNum: 'text'}" style="text-align:center" sortable="'CostingNum'">{{d.CostingNum}}</td>
+                                                        <td title="'Customer_Reference_No'" filter="{ CustomerRefNo: 'text'}" style="text-align:center" sortable="'CustomerRefNo'">{{d.CustomerRefNo}}</td>
+                                                        <td title="'Action'" class="notfirst" style="text-align:center;width:150px;text-align:center">
+                                                            <button class="btn btn-sm btn-black" data-dismiss="modal" ng-click="ReportCtrl(d.CostingNum)">DownLoad</button>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

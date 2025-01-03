@@ -1,0 +1,58 @@
+﻿
+@{
+    ViewBag.Title = "XLProcess";
+    //Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    .box {
+        margin: 5% auto;
+        background-color: #945a59;
+        max-width: 400px;
+        position: relative;
+        border-radius: 15px;
+        padding: 25px;
+    }
+
+    .form-row {
+    }
+</style>
+<div ng-app="MyApp" ng-controller="XLController" ng-init="XlInit()">
+    <div class="card-header" style="background-color: #0097a7; height: 30px; margin-bottom: 4px; margin-top: 10px;">
+        <div class="row">
+            <div class="col-12 text-center" style="margin-left:-90px;">
+                <p style="font-weight: bold; color: white; margin-top: -17px;font-size: 25px !important; ">Excel Details</p>
+            </div>
+        </div>
+    </div>
+    <div class="box">
+        <h5><b>Upload Files (Dealership Excel Data)</b></h5>
+
+        <div class="form-row" style="display: unset">
+
+            <div class="form-row" style="display:unset">
+                @using (Html.BeginForm("XLProcess", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                {
+                    <div>
+                        @Html.TextBox("file", "", new { type = "file" }) <br />
+                        <br />
+                        <center>
+                            <input type="submit" name="action" id="download" value="Download" style="background-color:skyblue" />
+                            <input type="submit" name="action" id="submit" value="Upload" style="background-color:skyblue" />
+                        </center>
+                    </div>
+                    <p style="color:skyblue; text-align: center;"><strong>@ViewBag.Message</strong></p>
+                }
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+

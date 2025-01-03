@@ -1,0 +1,26 @@
+﻿
+@{
+    ViewBag.Title = "Costing_List";
+}
+
+<div ng-app="MyApp" ng-controller="MyCtrl" ng-init="INIT()">
+    <div class="row mt-1">
+        <div class="table-responsive" style="margin:40px;">
+            <table style="width:1500px;margin-left:17px" ng-table="usersTable_CS" class="table table-bordered table-striped" show-filter="true">
+                <tr ng-repeat="x in $data" style="text-align:center" class="text-right">
+                    <td title="'DocEntry'" filter="{ docentry: 'text'}" class="notfirst" style="text-align:center" sortable="'docentry'">{{x.docentry}}</td>
+                    <td title="'Customer Name '" filter="{ Customername: 'text'}" class="notfirst" style="text-align:center" sortable="'Customername'">{{x.Customername}}</td>
+                    <td title="'Date Of Costing'" filter="{ CostingDate: 'date'}" class="notfirst" style="text-align:center" sortable="'CostingDate'">{{x.CostingDate}}</td>
+                    <td title="'Merchandiser'" filter="{ merchandiser: 'text'}" class="notfirst" style="text-align:center" sortable="'merchandiser'">{{x.merchandiser}}</td>
+                    <td title="'Costing Number'" filter="{ CostingNum: 'text'}" class="notfirst" style="text-align:center" sortable="'CostingNum'">{{x.CostingNum}}</td>
+                    <td title="'Sale Order No'" filter="{ SaleNum2: 'text'}" class="notfirst" style="text-align:center" sortable="'SaleNum2'">{{x.SaleNum2}}</td>
+                    <td title="'Action'" class="notfirst" style="text-align:center;width:150px;text-align:center">
+                        <button class="btn btn-sm btn-primary" data-dismiss="modal" ng-click="Approved_Costing(x)"> Aprove</button>
+                        <button class="btn btn-sm btn-danger" data-dismiss="modal" ng-click="Reject_Costing(x.docentry)"> Reject</button>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+

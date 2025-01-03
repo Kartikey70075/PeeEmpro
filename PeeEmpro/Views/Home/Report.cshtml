@@ -1,0 +1,307 @@
+﻿
+@{
+    ViewBag.Title = "Report";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div ng-init="ReportinitPage()" ng-controller="ReportPage">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <style>
+        .app-main .app-main__inner {
+            background-color: aliceblue;
+        }
+
+        fieldset {
+            margin-top: 20px;
+            border: 1px solid #3d5a80 !important;
+            padding: 1rem !important;
+        }
+
+        legend {
+            width: auto !important;
+            text-align: center;
+            font-size: 23px;
+        }
+    </style>
+    <div>
+        <div class="row">
+            <div class="col-12">
+                <div class="content-body">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-content">
+                                    <div class="card-body">
+                                        <hr />
+                                        <div class="wtmrk_dashboard_dashboard"></div>
+                                        <div class="row my-1">
+                                            <div class="col-12">
+                                                <div class="table-responsive">
+                                                    <table ng-table="AllCostingData" class="table table-bordered table-striped" show-filter="true">
+                                                        <tr ng-repeat="d in $data" class="text-right">
+                                                            <td title="'Serial No'" filter="{ docentry: 'text'}" style="text-align:center" sortable="'docentry'">{{d.docentry}}</td>
+                                                            <td title="'Customer Name'" filter="{ Customername: 'text'}" style="text-align:center" sortable="'Customername'">{{d.Customername}}</td>
+                                                            <td title="'Date Of Costing'" filter="{ CostingDate: 'text'}" style="text-align:center" sortable="'CostingDate'">{{d.CostingDate}}</td>
+                                                            <td title="'Sales Order Number'" filter="{ SaleNum2: 'text'}" style="text-align:center " sortable="'SaleNum2'">{{d.SaleNum2}}</td>
+                                                            <td title="'Costing Num'" filter="{ CostingNum: 'text'}" style="text-align:center" sortable="'CostingNum'">{{d.CostingNum}}</td>
+                                                            <td title="'Customer_Reference_No'" filter="{ CRefNo: 'text'}" style="text-align:center" sortable="'CRefNo'">{{d.CRefNo}}</td>
+                                                            <td title="'Action'" class="notfirst" style="text-align:center;width:150px;text-align:center">
+                                                                <button class="btn btn-sm btn-black" data-dismiss="modal" ng-click="GetAllRecordForReport(d.docentry)">DownLoad</button>
+
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+   
+    <div id="Myreport" class="modal" ng-hide="HideModal_Sales_PSC" style="overflow:scroll;">
+        <div class="modal-content">
+            <h2 class="text-center" style="background-color: #0097a7">
+                <span style="font-weight: bold; color: #ffffff;">PCS & KGS Items</span>
+            </h2>
+            <div class="text-right">
+                <button ng-click="closeModal_Sales()" class="btn-dark" style="color:white">X</button>
+                <button class="btn btn-primary" ng-click="Print1('Print')">ReportDownload</button>
+            </div>
+            <div id="Print" ng-hide="PrintRepaort">
+                <style>
+                    .table {
+                        border: 2px solid;
+                        border-collapse: collapse;
+                    }
+
+                        .table th, .table td {
+                            border: 2px solid; /* Set border for cells */
+                        }
+
+                    .Sizing {
+                        text-align: right; /* Example alignment for headers */
+                    }
+
+                    .Sizing2 {
+                        text-align: left; /* Example alignment for data cells */
+                    }
+                </style>
+                <p style="text-align:center">
+                    <img src="~/Images/Golden-Terry-Towels.png" />
+                </p>
+                <br />
+                <br />
+                <hr />
+                <br />
+                <br />
+                <table class="table table-bordered">
+                    <tr>
+                        <th class="Sizing">Customer Name:</th>
+                        <td class="Sizing2" colspan="3">{{CustomerName}}</td>
+                        <th class="Sizing">Customer Code:</th>
+                        <td class="Sizing2" colspan="3">{{CustomerCode}}</td>
+                        <th class="Sizing">Date of Costing:</th>
+                        <td class="Sizing2" colspan="3">{{cdate}}</td>
+                        <th class="Sizing">Merchandiser:</th>
+                        <td class="Sizing2" colspan="3">{{merchandiser}}</td>
+                    </tr>
+                    <tr>
+                        <th class="Sizing">Dyed Type:</th>
+                        <td class="Sizing" colspan="3">{{Dyed_Type}}</td>
+                        <th class="Sizing">Customer Ref.No:</th>
+                        <td class="Sizing" colspan="3">{{CRefNo}}</td>
+                        <th class="Sizing">Weaving Type:</th>
+                        <td class="Sizing" colspan="3">{{Weaving_Type}}</td>
+                        <th class="Sizing">Costing Number:</th>
+                        <td class="Sizing" colspan="3">{{Costing_Num}}</td>
+                    </tr>
+                    <tr class="text-center">
+                        <th class="Sizing">Sale's Order Number:</th>
+                        <td class="Sizing" colspan="3">{{SaleNum}}</td>
+                    </tr>
+                </table>
+                <br />
+                <table class="table table-bordered table-striped custom-table">
+                    <thead>
+                        <tr class="text-center">
+                            <th class="text-center">S.No</th>
+                            <th class="text-center">Type</th>
+                            <th class="text-center">Yarn Item Name</th>
+                            <th class="text-center">Cost</th>
+                            <th class="text-center">Percentage</th>
+                            <th class="text-center">Percentage_Val</th>
+
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="z in Allvalues track by $index">
+                            <td class="text-center">{{$index + 1}}</td>
+                            <td class="text-center">{{z.Type}}</td>
+                            <td class="text-center">{{z.SD_VAL}}</td>
+                            <td class="text-center">{{z.costdata}}</td>
+                            <td class="text-center">{{z.Percentage}}</td>
+                            <td class="text-center">{{z.Percentage_val}}</td>
+                        </tr>
+                        <tr style="text-align:center;">
+                            <th class="text-center"></th>
+                            <th class="text-center"></th>
+                            <th class="text-center"></th>
+                            <th class="text-center"></th>
+                            <th class="text-center">{{Percentage_total_Tinfo}}</th>
+                            <th class="text-center">{{costdata_Percentage_total_Tinfo}}</th>
+                        </tr>
+                    </tbody>
+                </table>
+                <hr />
+
+                <table>
+                    <tr class="text-center">
+                        <th>S.No</th>
+                        <th class="text-center">Particulars</th>
+                        <th class="text-center">Color Type</th>
+                        <th class="text-center">Color shades</th>
+                        <th class="text-center">Length</th>
+                        <th class="text-center">Width</th>
+                        <th class="text-center">GSM lbs/doz</th>
+                        <th class="text-center">Piece Weight</th>
+                        <th class="text-center">Dying weight loss(%)</th>
+                        <th class="text-center">Shearing loss(%)</th>
+                        <th class="text-center">Gray Weight</th>
+                        <th class="text-center">Order Qty</th>
+                        <th class="text-center">Order total Kg</th>
+                        <th class="text-center">Weave Loss(%)</th>
+                        <th class="text-center">Plan Qty</th>
+                        <th class="text-center">Plan Qty total Kg</th>
+                        <th class="text-center">Order/Plan Diffrence(%)</th>
+                        <th class="text-center">Sale price/pcs ({{General_Inputs.Currency_Code}})</th>
+                        <th class="text-center">Sale price/Kgs</th>
+                        <th class="text-center">Total Yarn in KGS</th>
+                        <th></th>
+                        <th></th>
+
+                    </tr>
+                    <tr ng-repeat="x in Alltowelinfo1.BathSheetArry track by $index" class="text-center">
+                        @*<td>{{Alltowelinfo1.BathSheetArry.length  $index + 1}}</td>*@
+                        <td class="text-center">{{$index + 1}}</td>
+                        <td class="text-center">{{x.Particulars}}</td>
+                        <td class="text-center">{{x.COLOR_VAL}}</td>
+                        <td class="text-center">{{x.Color_Shades}}</td>
+                        <td class="text-center">{{x.Length}}</td>
+                        <td class="text-center">{{x.Width}}</td>
+                        <td class="text-center">{{x.GSMlbsdoz}}</td>
+                        <td class="text-center">{{x.PcWeight}}</td>
+                        <td class="text-center">{{x.DyWgt}}</td>
+                        <td class="text-center">{{x.Shearingloss}}</td>
+                        <td class="text-center">{{x.GryWgt}}</td>
+                        <td class="text-center">{{x.Qty}}</td>
+                        <td class="text-center">{{x.TotalKg}}</td>
+                        <td class="text-center">{{x.WaveLossper}}</td>
+                        <td class="text-center">{{x.planQty}}</td>
+                        <td class="text-center">{{x.planTotalKg}}</td>
+                        <td class="text-center">{{x.OrderplanTotalper}}</td>
+                        <td class="text-center">{{x.Pricepc}}</td>
+                        <td class="text-center">{{x.PriceKgs}}</td>
+                        <td class="text-center">{{x.TotalWaveLoss}}</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td class="text-center">{{Grand_Total_Qty}}</td>
+                        <td class="text-center">{{Grand_Total_kg}}</td>
+                        <td></td>
+                        <td class="text-center">{{planQty_Total}}</td>
+                        <td class="text-center">{{planQty_Total_Kg}}</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td class="text-center">{{Wavesloss_Total}}</td>
+                    </tr>
+                </table>
+                <br />
+                <hr />
+                <table class="table table-bordered">
+                    <tr>
+                        <th>S.No</th>
+                        <th style="text-align:left;">Name</th>
+                        <th style="text-align:left;">Unit Price</th>
+                        <th style="text-align:left;">Quantity</th>
+                        <th style="text-align:left;">Value</th>
+                    </tr>
+                    <tr ng-repeat="x in Mat">
+                        <td>{{$index+1}}</td>
+                        <td>{{x.Material_name}}</td>
+                        <td>{{x.Unit_Price}}</td>
+                        <td>{{x.Quantity}}</td>
+                        <td>{{x.Material_Value}}</td>
+                    </tr>
+                </table>
+                <div class="col-6 text-center">
+                    <button class="btn btn-primary" ng-click="Print1('Print')">ReportDownload</button>
+                </div>
+            </div>
+
+            <button ng-click="closeModal_Sales_PCS()" style="background-color:black">Close</button>
+        </div>
+    </div>
+</div>
+<style>
+    .table1 {
+        width: 100%; /* Full width of the page */
+        border-collapse: collapse; /* Collapse borders */
+        table-layout: fixed; /* Make table cells have a fixed layout */
+    }
+</style>
+<style>
+    /* Center the modal */
+    #myModal {
+        display: none; /* Hidden by default */
+        position: fixed; /* Stay in place */
+        z-index: 9999; /* Sit on top */
+        left: 0;
+        top: 0;
+        width: 100%; /* Full width */
+        height: 100%; /* Full height */
+        overflow: scroll; /* Enable scroll if needed */
+        background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    }
+
+    .modal-content {
+        background-color: #fefefe;
+        /* margin: 15% auto;*/
+        padding: 20px;
+        border: 1px solid #888;
+        width: 100%;
+        /* height: 65%;*/
+    }
+
+    /* The Close Button */
+    .close {
+        color: #aaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+    }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+</style>
